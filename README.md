@@ -54,7 +54,20 @@ done
 
 ### Ваш скрипт:
 ```bash
-???
+#!/usr/bin/env bash
+
+addresses=(192.168.0.1 173.194.222.113 87.250.250.24)
+
+for count in {1..5}
+do
+date >> check_hosts.log
+    for h in ${addresses[@]}
+    do
+	curl -Is $h:80 >/dev/null
+        echo "Check " $h status=$? >> check_hosts.log
+    done
+done
+
 ```
 
 ## Обязательная задача 4

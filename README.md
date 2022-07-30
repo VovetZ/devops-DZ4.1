@@ -75,7 +75,25 @@ done
 
 ### Ваш скрипт:
 ```bash
-???
+#!/usr/bin/env bash
+timeout=5
+addresses=(192.168.0.1 173.194.222.113 87.250.250.24)
+result=0
+for count in {1..5}
+do
+    for h in ${addresses[@]}
+    do
+	curl -Is --connect-timeout $timeout $h:80 >/dev/null
+	result=$?
+        ### Проверка результата коннекта
+	if (($result != 0))
+	then
+	    echo "    ERROR on " $h status=$result >>check_hosts.log
+	    exit
+	fi
+	echo "Check " $h status=$? >> check_hosts.log
+    done
+done
 ```
 
 ## Дополнительное задание (со звездочкой*) - необязательно к выполнению
